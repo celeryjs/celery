@@ -159,11 +159,7 @@ export interface GlobalCeleryInstance extends Celery {
  */
 const globalCelery = (function wrap() {
     const celery = new Celery() as GlobalCeleryInstance
-
-    celery.create = function (controller?: AbortController) {
-        return new Celery(controller)
-    }
-
+    celery.create = Celery.create
     return celery
 })()
 
