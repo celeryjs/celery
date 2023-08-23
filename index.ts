@@ -73,10 +73,15 @@ export interface CeleryPayloadRequest<Payload = any, Params = any> extends Inter
 export interface CeleryResponse<Response = any, Payload = any> extends InternalCeleryResponse<Response, Payload> {}
 
 /**
+ * @returns The default origin
+ */
+const defaultOrigin = () => (typeof window !== 'undefined' && window.location) ? new URL(window.location.origin) : undefined
+
+/**
  * The Core implementation for Celery
  */
 export class CeleryCore {
-    public origin: URL = new URL(window.location.origin)
+    public origin: URL | undefined = defaultOrigin()
     public headers = new Headers()
 
     protected $client: Axios = axios.create()
@@ -84,6 +89,19 @@ export class CeleryCore {
     constructor(
         protected $controller: AbortController = new AbortController()
     ) {}
+
+    /**
+     * Set the origin of the requests
+     */
+    public setOrigin(origin: string | URL) {
+        if (origin instanceof URL) {
+            this.origin = origin
+        } else if (typeof origin === 'string') {
+            this.origin = new URL(origin)
+        } else {
+            throw new Error('Invalid origin provided')
+        }
+    }
 
     /**
      * Build request with provided config
@@ -94,7 +112,7 @@ export class CeleryCore {
         // Configure essential options
         if (config.signal) { aggregatedController.attach(config.signal) }
         config.signal = aggregatedController.signal
-        config.baseURL = config.baseURL || this.origin.toString()
+        config.baseURL = config.baseURL || this.origin?.toString()
 
         // Append headers
         for (const [key, value] of Object.entries(this.headers)) {
