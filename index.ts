@@ -1,5 +1,6 @@
-import axios, { type Axios, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosError } from "axios";
 import { AggregatedAbortController } from 'aggregated-abortcontroller'
+import type {  Axios, AxiosRequestConfig, AxiosResponse } from "axios";
 
 type ExtractType<T = Object> = { [K in keyof T]: T[K] }
 
@@ -13,6 +14,38 @@ type ExtractedAxiosRequestConfig<Payload = any> = ExtractType<AxiosRequestConfig
  */
 type ExtractedAxiosResponse<Response = any, Payload = any> = ExtractType<AxiosResponse<Response, Payload>>
 
+interface CeleryPromise<T> {
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: CeleryError) => TResult2 | PromiseLike<TResult2>) | undefined | null): CeleryPromise<TResult1 | TResult2>;
+
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: CeleryError) => TResult | PromiseLike<TResult>) | undefined | null): CeleryPromise<T | TResult>;
+}
+
+/**
+ * Celery Error Constructor
+ */
+export class CeleryError<Response = any, Payload = any> extends AxiosError {
+    constructor(
+        message?: string,
+        code?: string,
+        config?: InternalCeleryRequestConfig<Payload>,
+        request?: any,
+        response?: CeleryResponse<Response, Payload>
+    ) {
+        // @ts-ignore
+        super(message, config, code, request, response)
+    }
+}
 
 export interface InternalCeleryRequestConfig<Payload = any> extends Omit<ExtractedAxiosRequestConfig<Payload>, 'signal'> {
     signal?: AbortSignal
