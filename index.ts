@@ -107,8 +107,8 @@ export class Celery extends CeleryCore {
      * 
      * [MDN Reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET)
      */
-    public get<Resonse = any, Payload = any, Params = any>(url: string, config?: CeleryRequest<Params>) {
-        return this.$request<Resonse, Payload>(Object.assign({}, config, { method: 'GET', url: url }));
+    public get<Resonse = any, Params = any>(url: string, config?: CeleryRequest<Params>) {
+        return this.$request<Resonse>(Object.assign({}, config, { method: 'GET', url: url }));
     }
 
     /**
