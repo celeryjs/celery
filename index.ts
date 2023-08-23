@@ -91,19 +91,6 @@ export class CeleryCore {
     ) {}
 
     /**
-     * Set the origin of the requests
-     */
-    public setOrigin(origin: string | URL) {
-        if (origin instanceof URL) {
-            this.origin = origin
-        } else if (typeof origin === 'string') {
-            this.origin = new URL(origin)
-        } else {
-            throw new Error('Invalid origin provided')
-        }
-    }
-
-    /**
      * Build request with provided config
      */
     protected $request<Response = any, Payload = any>(config: CeleryRequestConfig): CeleryPromise<CeleryResponse<Response, Payload>> {
