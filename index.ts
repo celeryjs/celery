@@ -204,10 +204,10 @@ export interface GlobalCeleryInstance extends Celery {
 /**
  * Global Celery instance
  */
-const globalCelery = (function wrap() {
-    const celery = new Celery() as GlobalCeleryInstance
-    celery.create = Celery.create
-    return celery
+const celery = (() => {
+    const instance = new Celery() as GlobalCeleryInstance
+    instance.create = Celery.create
+    return instance
 })()
 
-export default globalCelery
+export default celery
