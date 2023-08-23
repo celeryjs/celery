@@ -75,8 +75,6 @@ export class CeleryCore {
 
 /**
  * Celery HTTP Client
- * 
- * A HTTP Client extends upon Axios
  */
 export class Celery extends CeleryCore {
     /**
