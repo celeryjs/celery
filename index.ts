@@ -80,29 +80,36 @@ export class CeleryCore {
     /**
      * Build request with provided config
      */
-    protected $request<Response = any, Payload = any>(config: CeleryRequestConfig) {
-        const aggregatedController = new AggregatedAbortController([this.$controller])
+    protected $request<Response = any, Payload = any>(config: CeleryRequestConfig): CeleryPromise<CeleryResponse<Response, Payload>> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const aggregatedController = new AggregatedAbortController([this.$controller])
 
-        // Configure essential options
-        if (config.signal) { aggregatedController.attach(config.signal) }
-        config.signal = aggregatedController.signal
-        config.baseURL = config.baseURL || this.origin.toString()
+                // Configure essential options
+                if (config.signal) { aggregatedController.attach(config.signal) }
+                config.signal = aggregatedController.signal
+                config.baseURL = config.baseURL || this.origin.toString()
 
-        // Append headers
-        for (const [key, value] of Object.entries(this.headers)) {
-            config.headers = config.headers || {}
-            config.headers[key] = value
-        }
+                // Append headers
+                for (const [key, value] of Object.entries(this.headers)) {
+                    config.headers = config.headers || {}
+                    config.headers[key] = value
+                }
 
-        // TODO: Append credentials
+                // TODO: Append credentials
 
-        // Send the request
-        const response = this.$client.request<Response, CeleryResponse<Response, Payload>, Payload>(config)
+                // Send the request
+                const response = this.$client.request<Response, CeleryResponse<Response, Payload>, Payload>(config)
 
-        // Detach signals when request is finished
-        response.finally(() => aggregatedController.detachAll())
+                // Detach signals when request is finished
+                response.finally(() => aggregatedController.detachAll())
 
-        return response
+                resolve(response)
+            } catch (error) {
+                // @ts-ignore
+                reject(new CeleryError(error.message, error.config, error.code, error.request, error.response))
+            }
+        })
     }
 }
 
