@@ -1,0 +1,12 @@
+{
+  "name": "celery",
+  "version": "1.0.0",
+  "description": "A HTTP Client built on top of Axios",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT"
+}
