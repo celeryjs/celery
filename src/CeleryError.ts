@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import type { CeleryResponse, InternalCeleryRequestConfig } from "./types";
+import type { CeleryRequestConfig, CeleryResponse } from "./types";
 
 /**
  * Celery Error Constructor
@@ -8,7 +8,7 @@ export class CeleryError<Response = any, Payload = any> extends AxiosError {
     constructor(
         message?: string,
         code?: string,
-        config?: InternalCeleryRequestConfig<Payload>,
+        config?: CeleryRequestConfig<Payload>,
         request?: any,
         response?: CeleryResponse<Response, Payload>
     ) {

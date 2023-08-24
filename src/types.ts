@@ -13,15 +13,15 @@ type ExtractedAxiosRequestConfig<Payload = any> = ExtractType<AxiosRequestConfig
  */
 type ExtractedAxiosResponse<Response = any, Payload = any> = ExtractType<AxiosResponse<Response, Payload>>
 
-export interface InternalCeleryRequestConfig<Payload = any> extends Omit<ExtractedAxiosRequestConfig<Payload>, 'signal'> {
+interface InternalCeleryRequestConfig<Payload = any> extends Omit<ExtractedAxiosRequestConfig<Payload>, 'signal'> {
     signal?: AbortSignal
 }
 
-export interface InternalCeleryRequest<Payload = any, Params = any> extends Omit<InternalCeleryRequestConfig<Payload>, 'method' | 'url' | 'params'> {
+interface InternalCeleryRequest<Payload = any, Params = any> extends Omit<InternalCeleryRequestConfig<Payload>, 'method' | 'url' | 'params'> {
     params?: Params
 }
 
-export interface InternalCeleryResponse<Response = any, Payload = any> extends Omit<ExtractedAxiosResponse<Response, Payload>, 'config'> {
+interface InternalCeleryResponse<Response = any, Payload = any> extends Omit<ExtractedAxiosResponse<Response, Payload>, 'config'> {
     config: InternalCeleryRequestConfig<Payload>
 }
 
