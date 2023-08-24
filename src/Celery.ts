@@ -1,5 +1,5 @@
 import { CeleryCore } from "./CeleryCore";
-import type { CeleryConfig, CeleryPayloadRequest, CeleryRequest } from "./types";
+import type { CeleryPayloadRequest, CeleryRequest } from "./types";
 
 /**
  * Celery HTTP Client
@@ -8,8 +8,8 @@ export class Celery extends CeleryCore {
     /**
      * Create a new Celery instance
      */
-    static create(config?: CeleryConfig) {
-        return new this(config)
+    static create(controller?: AbortController) {
+        return new this(controller)
     }
 
     /**
