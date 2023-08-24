@@ -1,8 +1,11 @@
+import { getDefaultOrigin } from "./utils"
+
 interface CeleryContextOptions {
     controller: AbortController
 }
 
 export class CeleryContext {
+    public origin: URL | undefined = getDefaultOrigin()
     public credentials: any = {}
     public controller: AbortController
 

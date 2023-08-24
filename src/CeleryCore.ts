@@ -1,20 +1,14 @@
 import axios, { type Axios } from "axios"
 import { AggregatedAbortController } from "aggregated-abortcontroller"
 import { CeleryContext } from "./CeleryContext"
+import { getDefaultOrigin } from "./utils"
 import type { CeleryPromise, CeleryRequestConfig, CeleryResponse } from "./types"
-
-/**
- * @returns The default origin
- */
-const defaultOrigin = () => (typeof window !== 'undefined' && window.location) ? new URL(window.location.origin) : undefined
 
 /**
  * The Core implementation for Celery
  */
 export class CeleryCore {
-    public origin: URL | undefined = defaultOrigin()
     public headers = new Headers()
-
     protected $client: Axios = axios.create()
 
     constructor(
@@ -31,7 +25,7 @@ export class CeleryCore {
         // Configure essential options
         if (config.signal) { aggregatedController.attach(config.signal) }
         config.signal = aggregatedController.signal
-        config.baseURL = config.baseURL || this.origin?.toString()
+        config.baseURL = config.baseURL || context.origin?.toString()
 
         // Append headers
         for (const [key, value] of Object.entries(this.headers)) {
