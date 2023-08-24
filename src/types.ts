@@ -57,3 +57,7 @@ export interface CeleryPromise<T> {
      */
     finally(onfinally?: (() => void) | undefined | null): CeleryPromise<T>
 }
+
+export interface CeleryConfig {
+    controller: AbortController
+}

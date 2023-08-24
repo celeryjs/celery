@@ -1,6 +1,6 @@
 import axios, { type Axios } from "axios"
 import { AggregatedAbortController } from "aggregated-abortcontroller"
-import type { CeleryPromise, CeleryRequestConfig, CeleryResponse } from "./types"
+import type { CeleryConfig, CeleryPromise, CeleryRequestConfig, CeleryResponse } from "./types"
 
 /**
  * @returns The default origin
@@ -14,17 +14,22 @@ export class CeleryCore {
     public origin: URL | undefined = defaultOrigin()
     public headers = new Headers()
 
+    protected $config!: CeleryConfig
     protected $client: Axios = axios.create()
 
-    constructor(
-        protected $controller: AbortController = new AbortController()
-    ) { }
+    constructor(config?: CeleryConfig) {
+        if (!config) { 
+            this.$config = {
+                controller: new AbortController()
+            }
+        }
+    }
 
     /**
      * Build request with provided config
      */
     protected $request<Response = any, Payload = any>(config: CeleryRequestConfig): CeleryPromise<CeleryResponse<Response, Payload>> {
-        const aggregatedController = new AggregatedAbortController([this.$controller])
+        const aggregatedController = new AggregatedAbortController([this.$config.controller])
 
         // Configure essential options
         if (config.signal) { aggregatedController.attach(config.signal) }
