@@ -12,6 +12,10 @@ export class Celery extends CeleryCore {
     static create(context?: CeleryContext) {
         return new this(context)
     }
+    
+    public create(context?: CeleryContext) {
+        return new Celery(context)
+    }
 
     /**
      * Send a HEAD request to the given URL
