@@ -49,7 +49,12 @@ export class CeleryCore {
             config.headers[key] = value
         }
 
-        // TODO: Append credentials
+        // Retrieve the credential
+        const credential = context.credentialStore.retrieve()
+        if (credential) {
+            config.headers = config.headers || {}
+            config.headers.Authorization = credential.get()
+        }
 
         return new Promise(async (resolve, reject) => {
             try {
