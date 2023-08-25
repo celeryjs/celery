@@ -13,15 +13,15 @@ export interface CeleryCoreOptions {
  * The Core implementation for Celery
  */
 export class CeleryCore {
-    public origin: CeleryContextOrigin
     public headers = new Headers()
+    public origin: CeleryContextOrigin
+    public context: CeleryContext
 
     protected $client: Axios = axios.create()
-    protected $context: CeleryContext
 
     constructor(options: CeleryCoreOptions = {}) {
         this.origin = options.origin
-        this.$context = options.context || new CeleryContext()
+        this.context = options.context || new CeleryContext()
     }
 
     /**
@@ -29,7 +29,7 @@ export class CeleryCore {
      */
     protected $request<Response = any, Payload = any>(config: CeleryRequestConfig): CeleryPromise<CeleryResponse<Response, Payload>> {
         const instance = this
-        const context = this.$context
+        const context = this.context
 
         // Resolve the base URL
         config.baseURL = withFirstFound(
