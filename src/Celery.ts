@@ -9,12 +9,12 @@ export class Celery extends CeleryCore {
     /**
      * Create a new Celery instance
      */
-    static create(context?: CeleryContext) {
-        return new this(context)
+    static create(options?: CeleryContext) {
+        return new this(options)
     }
     
-    public create(context?: CeleryContext) {
-        return new Celery(context)
+    public create(options?: CeleryContext) {
+        return new Celery(options)
     }
 
     /**

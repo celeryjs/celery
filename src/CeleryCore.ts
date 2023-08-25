@@ -1,20 +1,27 @@
+import type { CeleryPromise, CeleryRequestConfig, CeleryResponse } from "./types"
 import axios, { type Axios } from "axios"
 import { AggregatedAbortController } from "aggregated-abortcontroller"
-import { CeleryContext } from "./CeleryContext"
-import { getDefaultOrigin, withFirstFound } from "./utils"
-import type { CeleryPromise, CeleryRequestConfig, CeleryResponse } from "./types"
+import { CeleryContext, type CeleryContextOrigin } from "./CeleryContext"
+import { withFirstFound } from "./utils"
+
+export interface CeleryCoreOptions {
+    origin?: CeleryContextOrigin
+    context?: CeleryContext
+}
 
 /**
  * The Core implementation for Celery
  */
 export class CeleryCore {
-    public origin: URL | undefined = getDefaultOrigin()
+    public origin: CeleryContextOrigin
     public headers = new Headers()
     protected $client: Axios = axios.create()
+    protected $context: CeleryContext
 
-    constructor(
-        protected $context: CeleryContext = new CeleryContext()
-    ) {}
+    constructor(options: CeleryCoreOptions = {}) {
+        this.origin = options.origin
+        this.$context = options.context || new CeleryContext()
+    }
 
     /**
      * Build request with provided config
