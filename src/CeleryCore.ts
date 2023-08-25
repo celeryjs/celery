@@ -20,13 +20,21 @@ export class CeleryCore {
      * Build request with provided config
      */
     protected $request<Response = any, Payload = any>(config: CeleryRequestConfig): CeleryPromise<CeleryResponse<Response, Payload>> {
+        const instance = this
         const context = this.$context
-        const aggregatedController = new AggregatedAbortController([context.controller])
 
-        // Configure essential options
+        // Resolve the base URL
+        config.baseURL = withFirstFound(
+            config.baseURL,
+            context.origin?.toString(),
+            instance.origin?.toString(),
+        )
+        
+        // Aggregate the abort signals
+        const aggregatedController = new AggregatedAbortController([context.controller])
         if (config.signal) { aggregatedController.attach(config.signal) }
         config.signal = aggregatedController.signal
-        config.baseURL = config.baseURL || context.origin?.toString()
+        
 
         // Append headers
         for (const [key, value] of Object.entries(this.headers)) {
