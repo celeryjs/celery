@@ -1,8 +1,8 @@
 export type CeleryContextOrigin = URL | undefined
 
 export interface CeleryContextOptions {
-    origin: CeleryContextOrigin
-    controller: AbortController
+    origin?: CeleryContextOrigin
+    controller?: AbortController
 }
 
 export class CeleryContext {

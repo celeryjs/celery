@@ -1,5 +1,4 @@
-import { CeleryCore } from "./CeleryCore";
-import type{ CeleryContext } from "./CeleryContext";
+import { CeleryCore, CeleryCoreOptions } from "./CeleryCore";
 import type { CeleryPayloadRequest, CeleryRequest } from "./types";
 
 /**
@@ -9,12 +8,27 @@ export class Celery extends CeleryCore {
     /**
      * Create a new Celery instance
      */
-    static create(options?: CeleryContext) {
+    static create(options?: CeleryCoreOptions) {
         return new this(options)
     }
     
-    public create(options?: CeleryContext) {
+    /**
+     * Create a new Celery instance
+     */
+    public create(options?: CeleryCoreOptions) {
         return new Celery(options)
+    }
+
+    /**
+     * Extend the current Celery instance
+     * @param options 
+     * @returns 
+     */
+    public extend(options?: CeleryCoreOptions) {
+        return new Celery({
+            origin: options?.origin || this.origin,
+            context: options?.context || this.$context,
+        })
     }
 
     /**
