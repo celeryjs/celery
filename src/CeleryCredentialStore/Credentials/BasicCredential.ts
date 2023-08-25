@@ -1,12 +1,14 @@
 import { CredentialAbstract } from "./CredentialAbstract";
-import { StringBase64 } from "../Base64";
+import { StringBase64 } from "../../Base64";
+import { BasicHttpAuthenticationScheme } from "../types";
 
 /**
  * Basic credential
  * 
  * The credentials, encoded according to the specified scheme.
  * 
- * [Basic Authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization#basic)
+ * [HTTP authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)
+ * | [Basic Authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization#basic)
  */
 export class BasicCredential extends CredentialAbstract {
     public type = "Basic";
@@ -15,10 +17,10 @@ export class BasicCredential extends CredentialAbstract {
 
     private base64 = new StringBase64();
 
-    constructor(username: string, password: string) {
+    constructor(options: BasicHttpAuthenticationScheme) {
         super();
-        this.username = username;
-        this.password = password;
+        this.username = options.username;
+        this.password = options.password;
     }
 
     getTokenType(): string {
