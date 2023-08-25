@@ -34,7 +34,6 @@ export class CeleryCore {
         const aggregatedController = new AggregatedAbortController([context.controller])
         if (config.signal) { aggregatedController.attach(config.signal) }
         config.signal = aggregatedController.signal
-        
 
         // Append headers
         for (const [key, value] of Object.entries(this.headers)) {
