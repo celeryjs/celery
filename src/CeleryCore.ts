@@ -43,16 +43,17 @@ export class CeleryCore {
         if (config.signal) { aggregatedController.attach(config.signal) }
         config.signal = aggregatedController.signal
 
+        // Prepare the request headers
+        config.headers = config.headers || {}
+
         // Retrieve the credential
         const credential = context.credentialStore.retrieve()
         if (credential) {
-            config.headers = config.headers || {}
             config.headers.Authorization = credential.get()
         }
 
         // Append headers
         for (const [key, value] of Object.entries(this.headers)) {
-            config.headers = config.headers || {}
             config.headers[key] = value
         }
 
