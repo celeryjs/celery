@@ -1,2 +1,2 @@
 export * from './CeleryCredentialStore'
-export * from './Credential'
+export * from '../Credentials/CredentialAbstract'

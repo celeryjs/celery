@@ -1,7 +1,7 @@
-import { Credential } from "./Credential"
+import { CredentialAbstract } from "../Credentials/CredentialAbstract"
 
 export class CeleryCredentialStore {
-    private credential: Credential | undefined
+    private credential: CredentialAbstract | undefined
 
     store() {
         // TODO: Implement
