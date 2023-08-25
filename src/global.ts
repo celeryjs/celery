@@ -1,7 +1,8 @@
 import { Celery } from "./Celery"
+import { CeleryContext } from "./CeleryContext"
 
 export interface GlobalCeleryInstance extends Celery {
-    create(controller?: AbortController): Celery
+    create(context?: CeleryContext): Celery
 }
 
 /**
