@@ -14,11 +14,11 @@ export class Celery extends CeleryInstance {
     }
 
     /**
-     * Extend the current Celery instance
+     * Create a new Child Celery instance
      * @param options 
      * @returns 
      */
-    public extends(options?: CeleryCoreOptions) {
+    public createChildInstance(options?: CeleryCoreOptions) {
         return new ChildCeleryInstance(this, options)
     }
 }
