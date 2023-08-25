@@ -45,8 +45,8 @@ export class Celery extends CeleryCore {
      * 
      * [MDN Reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS)
      */
-    public options<Resonse = any, Params = any>(url: string, config?: CeleryRequest<Params>) {
-        return this.$request<Resonse>(Object.assign({}, config, { method: 'OPTIONS', url: url }));
+    public options<Response = any, Params = any>(url: string, config?: CeleryRequest<Params>) {
+        return this.$request<Response>(Object.assign({}, config, { method: 'OPTIONS', url: url }));
     }
 
     /**
@@ -54,8 +54,8 @@ export class Celery extends CeleryCore {
      * 
      * [MDN Reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET)
      */
-    public get<Resonse = any, Params = any>(url: string, config?: CeleryRequest<Params>) {
-        return this.$request<Resonse>(Object.assign({}, config, { method: 'GET', url: url }));
+    public get<Response = any, Params = any>(url: string, config?: CeleryRequest<Params>) {
+        return this.$request<Response>(Object.assign({}, config, { method: 'GET', url: url }));
     }
 
     /**
@@ -63,8 +63,8 @@ export class Celery extends CeleryCore {
      * 
      * [MDN Reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST)
      */
-    public post<Resonse = any, Payload = any, Params = any>(url: string, config: CeleryPayloadRequest<Payload, Params>) {
-        return this.$request<Resonse, Payload>(Object.assign({}, config, { method: 'POST', url: url }));
+    public post<Response = any, Payload = any, Params = any>(url: string, config: CeleryPayloadRequest<Payload, Params>) {
+        return this.$request<Response, Payload>(Object.assign({}, config, { method: 'POST', url: url }));
     }
 
     /**
@@ -72,8 +72,8 @@ export class Celery extends CeleryCore {
      * 
      * [MDN Reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT)
      */
-    public put<Resonse = any, Payload = any, Params = any>(url: string, config: CeleryPayloadRequest<Payload, Params>) {
-        return this.$request<Resonse, Payload>(Object.assign({}, config, { method: 'PUT', url: url }));
+    public put<Response = any, Payload = any, Params = any>(url: string, config: CeleryPayloadRequest<Payload, Params>) {
+        return this.$request<Response, Payload>(Object.assign({}, config, { method: 'PUT', url: url }));
     }
 
     /**
@@ -81,8 +81,8 @@ export class Celery extends CeleryCore {
      * 
      * [MDN Reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PATCH)
      */
-    public patch<Resonse = any, Payload = any, Params = any>(url: string, config: CeleryPayloadRequest<Payload, Params>) {
-        return this.$request<Resonse, Payload>(Object.assign({}, config, { method: 'PATCH', url: url }));
+    public patch<Response = any, Payload = any, Params = any>(url: string, config: CeleryPayloadRequest<Payload, Params>) {
+        return this.$request<Response, Payload>(Object.assign({}, config, { method: 'PATCH', url: url }));
     }
 
     /**
@@ -90,7 +90,7 @@ export class Celery extends CeleryCore {
      * 
      * [MDN Reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE)
      */
-    public delete<Resonse = any, Payload = any, Params = any>(url: string, config: CeleryPayloadRequest<Payload, Params>) {
-        return this.$request<Resonse, Payload>(Object.assign({}, config, { method: 'DELETE', url: url }));
+    public delete<Response = any, Payload = any, Params = any>(url: string, config: CeleryPayloadRequest<Payload, Params>) {
+        return this.$request<Response, Payload>(Object.assign({}, config, { method: 'DELETE', url: url }));
     }
 }
