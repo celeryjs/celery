@@ -52,7 +52,7 @@ export class CeleryCore {
         // Retrieve the credential
         const credential = context.credentialStore.retrieve()
         if (credential) {
-            config.headers.Authorization = credential.get()
+            config.headers["Authorization"] = credential.get()
         }
 
         // Append headers
