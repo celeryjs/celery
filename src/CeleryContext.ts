@@ -11,13 +11,13 @@ export interface CeleryContextOptions {
 export class CeleryContext {
     #origin: CeleryContextOrigin
     #controller: AbortController
-    #credentialStore: CeleryCredentialStore
+    #credentialStore: CeleryCredentialStore | undefined
 
     constructor(options?: CeleryContextOptions) {
         options = (options || {}) as CeleryContextOptions
         this.#origin = options.origin
         this.#controller = options.controller || new AbortController()
-        this.#credentialStore = options.credentialStore || new CeleryCredentialStore()
+        this.#credentialStore = options.credentialStore
     }
 
     get origin(): CeleryContextOrigin {
@@ -28,7 +28,7 @@ export class CeleryContext {
         return this.#controller
     }
 
-    get credentialStore(): CeleryCredentialStore {
+    get credentialStore(): CeleryCredentialStore | undefined {
         return this.#credentialStore
     }
 }
