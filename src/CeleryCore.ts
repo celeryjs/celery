@@ -15,6 +15,7 @@ export interface CeleryCoreOptions {
 export class CeleryCore {
     public origin: CeleryContextOrigin
     public headers = new Headers()
+
     protected $client: Axios = axios.create()
     protected $context: CeleryContext
 
