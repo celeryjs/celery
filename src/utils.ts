@@ -1,6 +1,4 @@
-export type Constructor<T> = new (...args: any[]) => T
-
-/**
+s/**
  * Get the first found value
  * @param args 
  * @returns 

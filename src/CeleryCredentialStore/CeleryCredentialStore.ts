@@ -1,10 +1,6 @@
-import { BasicCredential } from "./Credentials/BasicCredential"
+import { CredentialMap } from "./CredentialMap"
 import type { CredentialAbstract } from "./Credentials/CredentialAbstract"
-import type { CeleryCredentialStoreTypeMap, Constructor } from "./types"
-
-const CredentialMap: Record<keyof CeleryCredentialStoreTypeMap, Constructor<CredentialAbstract>> = {
-    Basic: BasicCredential
-} 
+import type { CeleryCredentialStoreTypeMap } from "./types"
 
 export class CeleryCredentialStore {
     private credential: CredentialAbstract | undefined
