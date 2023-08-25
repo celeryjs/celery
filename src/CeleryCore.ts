@@ -39,9 +39,12 @@ export class CeleryCore {
         )
         
         // Aggregate the abort signals
-        const aggregatedController = new AggregatedAbortController([context.controller])
-        if (config.signal) { aggregatedController.attach(config.signal) }
-        config.signal = aggregatedController.signal
+        if (config.signal) { 
+            const aggregatedController = new AggregatedAbortController([context.controller.signal, config.signal])
+            config.signal = aggregatedController.signal
+        } else {
+            config.signal = context.controller.signal
+        }
 
         // Prepare the request headers
         config.headers = config.headers || {}
