@@ -38,13 +38,10 @@ export class CeleryCore {
             instance.origin?.toString(),
         )
         
-        // Register the AbortSignal to the request
-        if (config.signal) { 
-            const aggregatedController = new AggregatedAbortController([context.controller.signal, config.signal])
-            config.signal = aggregatedController.signal
-        } else {
-            config.signal = context.controller.signal
-        }
+        // Aggregate the abort signals
+        const aggregatedController = new AggregatedAbortController([context.controller])
+        if (config.signal) { aggregatedController.attach(config.signal) }
+        config.signal = aggregatedController.signal
 
         // Prepare the request headers
         config.headers = config.headers || {}
