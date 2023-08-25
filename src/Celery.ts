@@ -1,5 +1,5 @@
 import { CeleryCore, CeleryCoreOptions } from "./CeleryCore";
-import { withFirstFound } from "./utils";
+import { ChildCeleryInstance } from "./ChildCeleryInstance";
 import type { CeleryPayloadRequest, CeleryRequest } from "./types";
 
 /**
@@ -26,11 +26,7 @@ export class Celery extends CeleryCore {
      * @returns 
      */
     public extends(options?: CeleryCoreOptions) {
-        return new Celery({
-            origin: withFirstFound(options?.origin, this.origin),
-            context: withFirstFound(options?.context, this.context),
-            credentialStore: withFirstFound(options?.credentialStore, this.context?.credentialStore, this.credentialStore),
-        })
+        return new ChildCeleryInstance(this, options)
     }
 
     /**
