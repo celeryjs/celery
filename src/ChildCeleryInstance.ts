@@ -1,12 +1,12 @@
-import { Celery } from "./Celery";
 import { CeleryCoreOptions } from "./CeleryCore";
+import { CeleryInstance } from "./CeleryInstance";
 import { withFirstFound } from "./utils";
 
 /**
  * Child Celery Instance
  */
-export class ChildCeleryInstance extends Celery {
-    constructor(public parent: Celery, options?: CeleryCoreOptions) {
+export class ChildCeleryInstance extends CeleryInstance {
+    constructor(public parent: CeleryInstance, options?: CeleryCoreOptions) {
         super({
             origin: withFirstFound(options?.origin, parent.origin),
             context: withFirstFound(options?.context, parent.context),
