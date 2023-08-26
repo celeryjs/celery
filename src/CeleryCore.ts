@@ -54,7 +54,7 @@ export class CeleryCore {
 
         // Retrieve the credential
         const credentialStore = this.getCredentialStore()
-        config.headers["Authorization"] = credentialStore.retrieve()?.get()
+        config.headers["Authorization"] = credentialStore.retrieve()?.getAuthorizationHeader()
 
         // Append headers
         for (const [key, value] of Object.entries(this.headers)) {
