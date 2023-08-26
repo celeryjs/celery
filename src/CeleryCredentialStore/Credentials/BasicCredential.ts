@@ -1,6 +1,6 @@
 import { CredentialAbstract } from "./CredentialAbstract";
 import { StringBase64 } from "../../Base64";
-import { BasicHttpAuthenticationScheme } from "../types";
+import type { BasicHttpAuthenticationScheme } from "../types";
 
 /**
  * Basic credential
