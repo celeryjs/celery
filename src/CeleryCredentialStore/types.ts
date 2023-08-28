@@ -25,8 +25,8 @@ export interface DigestHttpAuthenticationScheme {
 
 export interface CeleryCredentialStoreTypeMap {
     Basic: BasicHttpAuthenticationScheme;
-    // Bearer: BearerHttpAuthenticationScheme;
-    // Digest: DigestHttpAuthenticationScheme;
+    Bearer: BearerHttpAuthenticationScheme;
+    Digest: DigestHttpAuthenticationScheme;
 }
 
 export type CeleryCredentialStoreTypes = keyof CeleryCredentialStoreTypeMap;
