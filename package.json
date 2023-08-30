@@ -1,5 +1,5 @@
 {
-  "name": "celery",
+  "name": "@celeryjs/celery",
   "version": "1.0.0-alpha.1",
   "description": "A HTTP Client built on top of Axios",
   "main": "dist/index.js",
