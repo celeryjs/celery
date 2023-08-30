@@ -3,6 +3,8 @@ import { Celery } from './Celery'
 export * from './types'
 export * from './Celery'
 export * from './CeleryCore'
+export * from './CeleryContext'
+export * from './CeleryCredentialStore'
 export * from './CeleryError'
 
 /**
