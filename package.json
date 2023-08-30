@@ -4,6 +4,9 @@
   "description": "A HTTP Client built on top of Axios",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "run-s build-dist build-dts",
     "build-dist": "tsup src/index.ts --target es2020 --format cjs --clean --out-dir dist",
