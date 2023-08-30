@@ -3,6 +3,7 @@ import { AggregatedAbortController } from "aggregated-abortcontroller"
 import { CeleryContext } from "./CeleryContext"
 import { CeleryCredentialStore } from "./CeleryCredentialStore"
 import { withFirstFound } from "./utils"
+import { version } from "../package.json"
 import type { Axios } from "axios"
 import type { CeleryContextOrigin } from "./CeleryContext"
 import type { CeleryPromise, CeleryRequestConfig, CeleryResponse } from "./types"
@@ -21,6 +22,8 @@ export class CeleryCore {
     public origin: CeleryContextOrigin
     public context: CeleryContext
     public credentialStore: CeleryCredentialStore
+
+    public readonly version = version
 
     protected $client: Axios = axios.create()
 
