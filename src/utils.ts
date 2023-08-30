@@ -1,4 +1,4 @@
-s/**
+/**
  * Get the first found value
  * @param args 
  * @returns 
