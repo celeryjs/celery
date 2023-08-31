@@ -56,8 +56,17 @@ export class CeleryCore {
         config.headers = config.headers || {}
 
         // Retrieve the credential
-        const credentialStore = this.getCredentialStore()
-        config.headers["Authorization"] = credentialStore.retrieve()?.getAuthorizationHeader()
+        // If the credential is not provided in the config, use the credential store
+        if (!("Authorization" in config.headers)) {
+            const credentialStore = this.getCredentialInterface()
+            config.headers["Authorization"] = credentialStore?.getAuthorizationHeader()
+
+            // Remove the credentials from the request if the withCredentials is set to false
+            if (config.withCredentials === false) {
+                delete config.headers["Authorization"]
+            }
+        }
+
 
         // Append headers
         for (const [key, value] of Object.entries(this.headers)) {
@@ -88,7 +97,11 @@ export class CeleryCore {
      * Otherwise, use the credential store of the instance
      * @returns 
      */
-    private getCredentialStore() {
-        return this.context.credentialStore || this.credentialStore
+    private getCredentialInterface() {
+        const credential = withFirstFound(
+            this.context.credentialStore?.retrieve(),
+            this.credentialStore?.retrieve()
+        )
+        return credential
     }
 }
