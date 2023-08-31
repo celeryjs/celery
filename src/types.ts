@@ -30,7 +30,7 @@ interface InternalCeleryResponse<Response = any, Payload = any> extends Omit<Ext
     config: InternalCeleryRequestConfig<Payload>
 }
 
-export interface CeleryDefaultConfig<Payload = any> extends ExtractedAxiosDefaults<Payload> {}
+export interface CeleryDefaultConfigs<Payload = any> extends ExtractedAxiosDefaults<Payload> {}
 export interface CeleryRequestConfig<Payload = any> extends InternalCeleryRequestConfig<Payload> {}
 export interface CeleryRequest<Params = any> extends InternalCeleryRequest<any, Params> {}
 export interface CeleryPayloadRequest<Payload = any, Params = any> extends InternalCeleryRequest<Payload, Params> {}
