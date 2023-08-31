@@ -12,9 +12,9 @@ import type { DigestHttpAuthenticationScheme } from "../types";
 export class DigestCredential extends CredentialAbstract {
     public type = "Digest";
 
-    constructor(private scheme: DigestHttpAuthenticationScheme) {
-        super();
-    }
+    constructor(
+        public credential: DigestHttpAuthenticationScheme
+    ) { super(); }
 
     getTokenType(): string {
         return this.type;
@@ -22,17 +22,17 @@ export class DigestCredential extends CredentialAbstract {
 
     getTokenValue(): string {
         return [
-            this.scheme.username    ? `username=${this.scheme.username}` : '',
-            this.scheme.realm       ? `realm=${this.scheme.realm}` : '',
-            this.scheme.nonce       ? `nonce=${this.scheme.nonce}` : '',
-            this.scheme.algorithm   ? `algorithm=${this.scheme.algorithm}` : '',
-            this.scheme.cnonce      ? `cnonce=${this.scheme.cnonce}` : '',
-            this.scheme.nc          ? `nc=${this.scheme.nc}` : '',
-            this.scheme.qop         ? `qop=${this.scheme.qop}` : '',
-            this.scheme.response    ? `response=${this.scheme.response}` : '',
-            this.scheme.opaque      ? `opaque=${this.scheme.opaque}` : '',
-            this.scheme.userhash    ? `userhash=${this.scheme.userhash}` : '',
-            this.scheme.uri         ? `uri=${this.scheme.uri}` : '',
+            this.credential.username    ? `username=${this.credential.username}` : '',
+            this.credential.realm       ? `realm=${this.credential.realm}` : '',
+            this.credential.nonce       ? `nonce=${this.credential.nonce}` : '',
+            this.credential.algorithm   ? `algorithm=${this.credential.algorithm}` : '',
+            this.credential.cnonce      ? `cnonce=${this.credential.cnonce}` : '',
+            this.credential.nc          ? `nc=${this.credential.nc}` : '',
+            this.credential.qop         ? `qop=${this.credential.qop}` : '',
+            this.credential.response    ? `response=${this.credential.response}` : '',
+            this.credential.opaque      ? `opaque=${this.credential.opaque}` : '',
+            this.credential.userhash    ? `userhash=${this.credential.userhash}` : '',
+            this.credential.uri         ? `uri=${this.credential.uri}` : '',
         ].join(',');
     } 
 

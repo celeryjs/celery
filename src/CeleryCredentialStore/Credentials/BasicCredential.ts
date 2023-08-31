@@ -15,7 +15,7 @@ export class BasicCredential extends CredentialAbstract {
     private base64 = new StringBase64();
 
     constructor(
-        private scheme: BasicHttpAuthenticationScheme
+        public credential: BasicHttpAuthenticationScheme
     ) { super(); }
 
     getTokenType(): string {
@@ -23,7 +23,7 @@ export class BasicCredential extends CredentialAbstract {
     }
 
     getTokenValue(): string {
-        return `${this.scheme.username}:${this.scheme.password}`
+        return `${this.credential.username}:${this.credential.password}`
     }
 
     getAuthorizationHeader() {

@@ -12,7 +12,7 @@ export class BearerCredential extends CredentialAbstract {
     public type = "Bearer";
 
     constructor(
-        private scheme: BearerHttpAuthenticationScheme
+        public credential: BearerHttpAuthenticationScheme
     ) { super(); }
 
     getTokenType(): string {
@@ -20,7 +20,7 @@ export class BearerCredential extends CredentialAbstract {
     }
 
     getTokenValue(): string {
-        return this.scheme.token
+        return this.credential.token
     }
 
     getAuthorizationHeader() {
