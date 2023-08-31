@@ -21,8 +21,8 @@ export interface CeleryCoreOptions {
  */
 export class CeleryCore {
     public url: CeleryContextURL
-    public default: CeleryDefaults
     public context: CeleryContext
+    public defaults: CeleryDefaults
     public headers = new Headers()
     public credentialStore: CeleryCredentialStore
 
@@ -36,7 +36,7 @@ export class CeleryCore {
         this.credentialStore = options.credentialStore || new CeleryCredentialStore()
         
         // Initialize the default configuration
-        this.default = new CeleryDefaults(this.$client, options.configuration)
+        this.defaults = new CeleryDefaults(this.$client, options.configuration)
     }
 
     /**
