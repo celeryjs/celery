@@ -20,7 +20,7 @@ export interface DigestHttpAuthenticationScheme {
     qop: string;
     response: string;
     opaque: string;
-    userhash: "true" | "false";
+    userhash?: "true" | "false";
 }
 
 export interface CeleryCredentialStoreTypeMap {

@@ -11,17 +11,18 @@ import type { DigestHttpAuthenticationScheme } from "../types";
  */
 export class DigestCredential extends CredentialAbstract {
     public type = "Digest";
-    public username: string;
-    public realm: string;
-    public uri: string;
-    public algorithm: string;
-    public nonce: string;
-    public nc: string;
-    public cnonce: string;
-    public qop: string;
-    public response: string;
-    public opaque: string;
-    public userhash: "true" | "false";
+
+    public username: DigestHttpAuthenticationScheme['username'];
+    public realm: DigestHttpAuthenticationScheme['realm'];
+    public uri: DigestHttpAuthenticationScheme['uri'];
+    public algorithm: DigestHttpAuthenticationScheme['algorithm'];
+    public nonce: DigestHttpAuthenticationScheme['nonce'];
+    public nc: DigestHttpAuthenticationScheme['nc'];
+    public cnonce: DigestHttpAuthenticationScheme['cnonce'];
+    public qop: DigestHttpAuthenticationScheme['qop'];
+    public response: DigestHttpAuthenticationScheme['response'];
+    public opaque: DigestHttpAuthenticationScheme['opaque'];
+    public userhash: DigestHttpAuthenticationScheme['userhash'];
 
     constructor(options: DigestHttpAuthenticationScheme) {
         super();
@@ -35,7 +36,7 @@ export class DigestCredential extends CredentialAbstract {
         this.qop = options.qop;
         this.response = options.response;
         this.opaque = options.opaque;
-        this.userhash = options.userhash;
+        this.userhash = options?.userhash;
     }
 
     getTokenType(): string {
@@ -43,17 +44,19 @@ export class DigestCredential extends CredentialAbstract {
     }
 
     getTokenValue(): string {
-        return `${ this.username ? `username=${this.username},` : '' }
-                ${ this.realm ? `realm=${this.realm},` : '' }
-                ${ this.nonce ? `nonce=${this.nonce},` : '' }
-                ${ this.algorithm ? `algorithm=${this.algorithm},` : '' }
-                ${ this.cnonce ? `cnonce=${this.cnonce},` : '' }
-                ${ this.nc ? `nc=${this.nc},` : '' }
-                ${ this.qop ? `qop=${this.qop},` : '' }
-                ${ this.response ? `response=${this.response},` : '' }
-                ${ this.opaque ? `opaque=${this.opaque},` : '' }
-                ${ this.userhash ? `userhash=${this.userhash},` : '' }
-                ${ this.uri ? `uri=${this.uri},` : '' }`
+        return [
+            `${ this.username ? `username=${this.username}` : '' }`,
+            `${ this.realm ? `realm=${this.realm}` : '' }`,
+            `${ this.nonce ? `nonce=${this.nonce}` : '' }`,
+            `${ this.algorithm ? `algorithm=${this.algorithm}` : '' }`,
+            `${ this.cnonce ? `cnonce=${this.cnonce}` : '' }`,
+            `${ this.nc ? `nc=${this.nc}` : '' }`,
+            `${ this.qop ? `qop=${this.qop}` : '' }`,
+            `${ this.response ? `response=${this.response}` : '' }`,
+            `${ this.opaque ? `opaque=${this.opaque}` : '' }`,
+            `${ this.userhash ? `userhash=${this.userhash}` : '' }`,
+            `${ this.uri ? `uri=${this.uri}` : '' }`,
+        ].join(',');
     } 
 
     getAuthorizationHeader() {
