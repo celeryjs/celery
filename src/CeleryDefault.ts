@@ -5,12 +5,13 @@ import { mergeDeepObject } from "./utils";
 
 export class CeleryDefault {
     public config: CeleryDefaultConfig
+    private axios: Axios
 
-    constructor(
-        private axios: Axios,
-        config?: CeleryDefaultConfig
-    ) {
+    constructor(axios: Axios, config?: CeleryDefaultConfig) {
+        this.axios = axios
         this.config = this.axios.defaults
+
+        // Merge the provided configuration
         if (config) this.merge(config)
     }
 
