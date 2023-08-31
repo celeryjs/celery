@@ -1,5 +1,13 @@
 export type Constructor<T> = new (...args: any[]) => T
 
+export interface CeleryCredentialStoreTypeMap {
+    Basic: BasicHttpAuthenticationScheme;
+    Bearer: BearerHttpAuthenticationScheme;
+    Digest: DigestHttpAuthenticationScheme;
+}
+
+export type CeleryCredentialStoreTypes = keyof CeleryCredentialStoreTypeMap;
+
 export interface BasicHttpAuthenticationScheme {
     username: string;
     password: string;
@@ -22,11 +30,3 @@ export interface DigestHttpAuthenticationScheme {
     opaque: string;
     userhash?: "true" | "false";
 }
-
-export interface CeleryCredentialStoreTypeMap {
-    Basic: BasicHttpAuthenticationScheme;
-    Bearer: BearerHttpAuthenticationScheme;
-    Digest: DigestHttpAuthenticationScheme;
-}
-
-export type CeleryCredentialStoreTypes = keyof CeleryCredentialStoreTypeMap;
