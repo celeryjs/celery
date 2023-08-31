@@ -55,7 +55,9 @@ export class CeleryCore {
         
         // Aggregate the abort signals
         const aggregatedController = new AggregatedAbortController([context.controller])
-        if (config.signal) { aggregatedController.attach(config.signal) }
+        if (config.signal) { 
+            aggregatedController.attach(config.signal) 
+        }
         config.signal = aggregatedController.signal
 
         // Prepare the request headers
@@ -72,7 +74,6 @@ export class CeleryCore {
                 delete config.headers["Authorization"]
             }
         }
-
 
         // Append headers
         for (const [key, value] of Object.entries(this.headers)) {
