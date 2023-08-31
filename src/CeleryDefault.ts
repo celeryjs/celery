@@ -1,14 +1,14 @@
 import { Axios } from "axios";
 import type { AxiosDefaults } from "axios";
-import type { CeleryConfiguration } from "./types";
+import type { CeleryDefaultConfig } from "./types";
 import { mergeDeepObject } from "./utils";
 
 export class CeleryDefault {
-    public config: CeleryConfiguration
+    public config: CeleryDefaultConfig
 
     constructor(
         private axios: Axios,
-        config?: CeleryConfiguration
+        config?: CeleryDefaultConfig
     ) {
         this.config = this.axios.defaults
         if (config) this.merge(config)
@@ -19,7 +19,7 @@ export class CeleryDefault {
      * @param key 
      * @returns 
      */
-    get<Key extends keyof CeleryConfiguration>(key: Key): CeleryConfiguration[Key] {
+    get<Key extends keyof CeleryDefaultConfig>(key: Key): CeleryDefaultConfig[Key] {
         return this.config[key]
     }
 
@@ -28,7 +28,7 @@ export class CeleryDefault {
      * @param key 
      * @param value 
      */
-    set<Key extends keyof CeleryConfiguration>(key: Key, value: CeleryConfiguration[Key]) {
+    set<Key extends keyof CeleryDefaultConfig>(key: Key, value: CeleryDefaultConfig[Key]) {
         this.config[key] = value
     }
 
@@ -37,7 +37,7 @@ export class CeleryDefault {
      * @param config 
      * @returns 
      */
-    merge(config: CeleryConfiguration){
+    merge(config: CeleryDefaultConfig){
         const newConfig = mergeDeepObject(this.config, config)
         this.config = newConfig
         this.axios.defaults = newConfig
@@ -49,7 +49,7 @@ export class CeleryDefault {
      * @param config 
      * @returns 
      */
-    update(config: CeleryConfiguration) {
+    update(config: CeleryDefaultConfig) {
         this.config = config as AxiosDefaults
         this.axios.defaults = config as AxiosDefaults
         return config

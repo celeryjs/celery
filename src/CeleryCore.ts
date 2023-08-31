@@ -7,13 +7,13 @@ import { CeleryCredentialStore } from "./CeleryCredentialStore"
 import { withFirstFound } from "./utils"
 import type { Axios } from "axios"
 import type { CeleryContextOrigin } from "./CeleryContext"
-import type { CeleryConfiguration, CeleryPromise, CeleryRequestConfig, CeleryResponse } from "./types"
+import type { CeleryDefaultConfig, CeleryPromise, CeleryRequestConfig, CeleryResponse } from "./types"
 
 export interface CeleryCoreOptions {
     origin?: CeleryContextOrigin
     context?: CeleryContext
     credentialStore?: CeleryCredentialStore
-    configuration?: CeleryConfiguration
+    configuration?: CeleryDefaultConfig
 }
 
 /**
