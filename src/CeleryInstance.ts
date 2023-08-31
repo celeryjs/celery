@@ -1,10 +1,21 @@
 import { CeleryCore } from "./CeleryCore";
+import { ChildCeleryInstance } from "./ChildCeleryInstance";
+import type { CeleryCoreOptions } from "./CeleryCore";
 import type { CeleryPayloadRequest, CeleryRequest } from "./types";
 
 /**
  * Celery HTTP Client
  */
 export class CeleryInstance extends CeleryCore {
+    /**
+     * Create a new Child Celery instance
+     * @param options 
+     * @returns 
+     */
+    public createChildInstance(options?: CeleryCoreOptions) {
+        return new ChildCeleryInstance(this, options)
+    }
+
     /**
      * Send a HEAD request to the given URL
      * 
