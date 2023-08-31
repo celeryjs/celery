@@ -1,6 +1,7 @@
 import { Axios } from "axios";
 import type { AxiosDefaults } from "axios";
 import type { CeleryConfiguration } from "./types";
+import { mergeDeepObject } from "./utils";
 
 export class CeleryDefault {
     public config: CeleryConfiguration
@@ -36,8 +37,8 @@ export class CeleryDefault {
      * @param config 
      * @returns 
      */
-    merge(config: Record<string, any>){
-        const newConfig = Object.assign({}, this.config, config)
+    merge(config: CeleryConfiguration){
+        const newConfig = mergeDeepObject(this.config, config)
         this.config = newConfig
         this.axios.defaults = newConfig
         return newConfig
@@ -48,7 +49,7 @@ export class CeleryDefault {
      * @param config 
      * @returns 
      */
-    update(config: Record<string, any>) {
+    update(config: CeleryConfiguration) {
         this.config = config as AxiosDefaults
         this.axios.defaults = config as AxiosDefaults
         return config
