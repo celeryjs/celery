@@ -1,26 +1,29 @@
 import axios from "axios"
 import { AggregatedAbortController } from "aggregated-abortcontroller"
+import { CeleryDefault } from "./CeleryDefault"
 import { CeleryContext } from "./CeleryContext"
 import { CeleryCredentialStore } from "./CeleryCredentialStore"
 import { withFirstFound } from "./utils"
 import { version } from "../package.json"
 import type { Axios } from "axios"
 import type { CeleryContextOrigin } from "./CeleryContext"
-import type { CeleryPromise, CeleryRequestConfig, CeleryResponse } from "./types"
+import type { CeleryConfiguration, CeleryPromise, CeleryRequestConfig, CeleryResponse } from "./types"
 
 export interface CeleryCoreOptions {
     origin?: CeleryContextOrigin
     context?: CeleryContext
     credentialStore?: CeleryCredentialStore
+    configuration?: CeleryConfiguration
 }
 
 /**
  * The Core implementation for Celery
  */
 export class CeleryCore {
+    public default: CeleryDefault
+    public context: CeleryContext
     public headers = new Headers()
     public origin: CeleryContextOrigin
-    public context: CeleryContext
     public credentialStore: CeleryCredentialStore
 
     public readonly version = version
@@ -31,6 +34,9 @@ export class CeleryCore {
         this.origin = options.origin
         this.context = options.context || new CeleryContext()
         this.credentialStore = options.credentialStore || new CeleryCredentialStore()
+        
+        // Initialize the default configuration
+        this.default = new CeleryDefault(this.$client, options.configuration)
     }
 
     /**
