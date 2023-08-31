@@ -12,23 +12,18 @@ import type { BasicHttpAuthenticationScheme } from "../types";
  */
 export class BasicCredential extends CredentialAbstract {
     public type = "Basic";
-    public username: string;
-    public password: string;
-
     private base64 = new StringBase64();
 
-    constructor(options: BasicHttpAuthenticationScheme) {
-        super();
-        this.username = options.username;
-        this.password = options.password;
-    }
+    constructor(
+        private scheme: BasicHttpAuthenticationScheme
+    ) { super(); }
 
     getTokenType(): string {
         return this.type;
     }
 
     getTokenValue(): string {
-        return `${this.username}:${this.password}`
+        return `${this.scheme.username}:${this.scheme.password}`
     }
 
     getAuthorizationHeader() {

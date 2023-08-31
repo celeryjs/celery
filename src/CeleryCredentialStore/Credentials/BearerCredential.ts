@@ -10,19 +10,17 @@ import type { BearerHttpAuthenticationScheme } from "../types";
  */
 export class BearerCredential extends CredentialAbstract {
     public type = "Bearer";
-    public token: string;
 
-    constructor(options: BearerHttpAuthenticationScheme) {
-        super();
-        this.token = options.token;
-    }
+    constructor(
+        private scheme: BearerHttpAuthenticationScheme
+    ) { super(); }
 
     getTokenType(): string {
         return this.type;
     }
 
     getTokenValue(): string {
-        return this.token
+        return this.scheme.token
     }
 
     getAuthorizationHeader() {

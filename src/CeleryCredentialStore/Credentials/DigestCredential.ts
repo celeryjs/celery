@@ -12,31 +12,8 @@ import type { DigestHttpAuthenticationScheme } from "../types";
 export class DigestCredential extends CredentialAbstract {
     public type = "Digest";
 
-    public username: DigestHttpAuthenticationScheme['username'];
-    public realm: DigestHttpAuthenticationScheme['realm'];
-    public uri: DigestHttpAuthenticationScheme['uri'];
-    public algorithm: DigestHttpAuthenticationScheme['algorithm'];
-    public nonce: DigestHttpAuthenticationScheme['nonce'];
-    public nc: DigestHttpAuthenticationScheme['nc'];
-    public cnonce: DigestHttpAuthenticationScheme['cnonce'];
-    public qop: DigestHttpAuthenticationScheme['qop'];
-    public response: DigestHttpAuthenticationScheme['response'];
-    public opaque: DigestHttpAuthenticationScheme['opaque'];
-    public userhash: DigestHttpAuthenticationScheme['userhash'];
-
-    constructor(options: DigestHttpAuthenticationScheme) {
+    constructor(private scheme: DigestHttpAuthenticationScheme) {
         super();
-        this.username = options.username;
-        this.realm = options.realm;
-        this.uri = options.uri;
-        this.algorithm = options.algorithm;
-        this.nonce = options.nonce;
-        this.nc = options.nc;
-        this.cnonce = options.cnonce;
-        this.qop = options.qop;
-        this.response = options.response;
-        this.opaque = options.opaque;
-        this.userhash = options?.userhash;
     }
 
     getTokenType(): string {
@@ -45,17 +22,17 @@ export class DigestCredential extends CredentialAbstract {
 
     getTokenValue(): string {
         return [
-            `${ this.username ? `username=${this.username}` : '' }`,
-            `${ this.realm ? `realm=${this.realm}` : '' }`,
-            `${ this.nonce ? `nonce=${this.nonce}` : '' }`,
-            `${ this.algorithm ? `algorithm=${this.algorithm}` : '' }`,
-            `${ this.cnonce ? `cnonce=${this.cnonce}` : '' }`,
-            `${ this.nc ? `nc=${this.nc}` : '' }`,
-            `${ this.qop ? `qop=${this.qop}` : '' }`,
-            `${ this.response ? `response=${this.response}` : '' }`,
-            `${ this.opaque ? `opaque=${this.opaque}` : '' }`,
-            `${ this.userhash ? `userhash=${this.userhash}` : '' }`,
-            `${ this.uri ? `uri=${this.uri}` : '' }`,
+            this.scheme.username    ? `username=${this.scheme.username}` : '',
+            this.scheme.realm       ? `realm=${this.scheme.realm}` : '',
+            this.scheme.nonce       ? `nonce=${this.scheme.nonce}` : '',
+            this.scheme.algorithm   ? `algorithm=${this.scheme.algorithm}` : '',
+            this.scheme.cnonce      ? `cnonce=${this.scheme.cnonce}` : '',
+            this.scheme.nc          ? `nc=${this.scheme.nc}` : '',
+            this.scheme.qop         ? `qop=${this.scheme.qop}` : '',
+            this.scheme.response    ? `response=${this.scheme.response}` : '',
+            this.scheme.opaque      ? `opaque=${this.scheme.opaque}` : '',
+            this.scheme.userhash    ? `userhash=${this.scheme.userhash}` : '',
+            this.scheme.uri         ? `uri=${this.scheme.uri}` : '',
         ].join(',');
     } 
 
