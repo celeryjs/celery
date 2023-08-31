@@ -6,7 +6,7 @@ type ExtractType<T = Object> = { [K in keyof T]: T[K] }
 /**
  * Extract `AxiosDefaults` type
  */
-type ExtractedAxiosDefaults<Payload = any> = AxiosDefaults<Payload>;
+type ExtractedAxiosDefaults<Payload = any> = ExtractType<AxiosDefaults<Payload>>;
 
 /**
  * Extract `AxiosRequestConfig` type
