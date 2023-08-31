@@ -6,11 +6,11 @@ import { CeleryContext } from "./CeleryContext"
 import { CeleryCredentialStore } from "./CeleryCredentialStore"
 import { withFirstFound } from "./utils"
 import type { Axios } from "axios"
-import type { CeleryContextOrigin } from "./CeleryContext"
+import type { CeleryContextURL } from "./CeleryContext"
 import type { CeleryDefaultConfigs, CeleryPromise, CeleryRequestConfig, CeleryResponse } from "./types"
 
 export interface CeleryCoreOptions {
-    origin?: CeleryContextOrigin
+    url?: CeleryContextURL
     context?: CeleryContext
     credentialStore?: CeleryCredentialStore
     configuration?: CeleryDefaultConfigs
@@ -20,10 +20,10 @@ export interface CeleryCoreOptions {
  * The Core implementation for Celery
  */
 export class CeleryCore {
+    public url: CeleryContextURL
     public default: CeleryDefaults
     public context: CeleryContext
     public headers = new Headers()
-    public origin: CeleryContextOrigin
     public credentialStore: CeleryCredentialStore
 
     public readonly version = version
@@ -31,7 +31,7 @@ export class CeleryCore {
     protected $client: Axios = axios.create()
 
     constructor(options: CeleryCoreOptions = {}) {
-        this.origin = options.origin
+        this.url = options.url
         this.context = options.context || new CeleryContext()
         this.credentialStore = options.credentialStore || new CeleryCredentialStore()
         
@@ -49,8 +49,8 @@ export class CeleryCore {
         // Resolve the base URL
         config.baseURL = withFirstFound(
             config.baseURL,
-            context.origin?.toString(),
-            instance.origin?.toString(),
+            context.url?.toString(),
+            instance.url?.toString(),
         )
         
         // Aggregate the abort signals

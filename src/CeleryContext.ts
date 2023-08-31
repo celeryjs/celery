@@ -1,27 +1,27 @@
 import { CeleryCredentialStore } from "./CeleryCredentialStore"
 
-export type CeleryContextOrigin = URL | undefined
+export type CeleryContextURL = URL | undefined
 
 export interface CeleryContextOptions {
-    origin?: CeleryContextOrigin
+    url?: CeleryContextURL
     controller?: AbortController
     credentialStore?: CeleryCredentialStore
 }
 
 export class CeleryContext {
-    #origin: CeleryContextOrigin
+    #url: CeleryContextURL
     #controller: AbortController
     #credentialStore: CeleryCredentialStore
 
     constructor(options?: CeleryContextOptions) {
         options = (options || {}) as CeleryContextOptions
-        this.#origin = options.origin
+        this.#url = options.url
         this.#controller = options.controller || new AbortController()
         this.#credentialStore = options.credentialStore || new CeleryCredentialStore()
     }
 
-    get origin(): CeleryContextOrigin {
-        return this.#origin
+    get url(): CeleryContextURL {
+        return this.#url
     }
 
     get controller(): AbortController {

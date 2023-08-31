@@ -1,6 +1,6 @@
-import { CeleryCoreOptions } from "./CeleryCore";
-import { CeleryInstance } from "./CeleryInstance";
 import { withFirstFound } from "./utils";
+import { CeleryInstance } from "./CeleryInstance";
+import type { CeleryCoreOptions } from "./CeleryCore";
 
 /**
  * Child Celery Instance
@@ -8,9 +8,19 @@ import { withFirstFound } from "./utils";
 export class ChildCeleryInstance extends CeleryInstance {
     constructor(public parent: CeleryInstance, options?: CeleryCoreOptions) {
         super({
-            origin: withFirstFound(options?.origin, parent.origin),
-            context: withFirstFound(options?.context, parent.context),
-            credentialStore: withFirstFound(options?.credentialStore, parent.context.credentialStore, parent.credentialStore),
+            url: withFirstFound(
+                options?.url,
+                parent.url,
+            ),
+            context: withFirstFound(
+                options?.context,
+                parent.context,
+            ),
+            credentialStore: withFirstFound(
+                options?.credentialStore,
+                parent.context.credentialStore,
+                parent.credentialStore,
+            ),
         })
     }
 }
