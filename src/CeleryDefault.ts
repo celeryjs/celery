@@ -5,6 +5,10 @@ import { mergeDeepObject } from "./utils";
 
 export class CeleryDefault {
     public config: CeleryDefaultConfig
+
+    /**
+     * @internal
+     */
     private axios: Axios
 
     constructor(axios: Axios, config?: CeleryDefaultConfig) {
