@@ -1,7 +1,12 @@
-import type { AxiosRequestConfig, AxiosResponse } from "axios";
+import type { AxiosDefaults, AxiosRequestConfig, AxiosResponse } from "axios";
 import type { CeleryError } from "./CeleryError";
 
 type ExtractType<T = Object> = { [K in keyof T]: T[K] }
+
+/**
+ * Extract `AxiosDefaults` type
+ */
+type ExtractedAxiosDefaults<Payload = any> = AxiosDefaults<Payload>;
 
 /**
  * Extract `AxiosRequestConfig` type
@@ -25,6 +30,7 @@ interface InternalCeleryResponse<Response = any, Payload = any> extends Omit<Ext
     config: InternalCeleryRequestConfig<Payload>
 }
 
+export interface CeleryConfiguration<Payload = any> extends ExtractedAxiosDefaults<Payload> {}
 export interface CeleryRequestConfig<Payload = any> extends InternalCeleryRequestConfig<Payload> {}
 export interface CeleryRequest<Params = any> extends InternalCeleryRequest<any, Params> {}
 export interface CeleryPayloadRequest<Payload = any, Params = any> extends InternalCeleryRequest<Payload, Params> {}
