@@ -11,12 +11,28 @@ export function withFirstFound<T>(...args: T[]) {
     }
 }
 
-// create a function to merge deep objects
-export function mergeDeepObject<T extends Record<string, any>>(target: T, source: T): T {
-    // @ts-ignore
+/**
+ * Merge a list of objects into a single object
+ * @param objects 
+ * @returns 
+ */
+export function mergeObjects<T = Record<string, any>>(...objects: any[]): T {
+    const merged = {} as T
+    for (const object of objects) {
+        mergeObject(merged, object)
+    }
+    return merged
+}
+
+/**
+ * Merge target and source objects
+ * @param target 
+ * @param source 
+ * @returns 
+ */
+export function mergeObject<T = Record<string, any>>(target: any, source: any): T {
     for (const key of Object.keys(source)) {
-        // @ts-ignore
-        if (source[key] instanceof Object) Object.assign(source[key], mergeDeepObject(target[key], source[key]))
+        if (source[key] instanceof Object) Object.assign(source[key], mergeObject(target[key], source[key]))
     }
     // Join `target` and modified `source`
     Object.assign(target || {}, source)

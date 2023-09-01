@@ -1,4 +1,4 @@
-import { mergeDeepObject } from "./utils";
+import { mergeObject } from "./utils";
 import type { Axios } from "axios";
 import type { CeleryDefaultConfigs } from "./types";
 
@@ -42,7 +42,7 @@ export class CeleryDefaults {
      * @returns 
      */
     merge(config: CeleryDefaultConfigs){
-        const merged = mergeDeepObject(this.config, config)
+        const merged = mergeObject<CeleryDefaultConfigs>(this.config, config)
         this.config = merged
         this.axios.defaults = merged
         return this.config
