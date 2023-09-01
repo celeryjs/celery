@@ -4,7 +4,7 @@ import { AggregatedAbortController } from "aggregated-abortcontroller"
 import { CeleryDefaults } from "./CeleryDefaults"
 import { CeleryContext } from "./CeleryContext"
 import { CeleryCredentialStore } from "./CeleryCredentialStore"
-import { withFirstFound } from "./utils"
+import { headerToRecords, withFirstFound } from "./utils"
 import type { Axios } from "axios"
 import type { CeleryContextURL } from "./CeleryContext"
 import type { CeleryDefaultConfigs, CeleryPromise, CeleryRequestConfig, CeleryResponse } from "./types"
@@ -46,6 +46,10 @@ export class CeleryCore {
         const instance = this
         const context = this.context
 
+        // Re-wrap headers
+        const headers = new Headers(config.headers as Record<string, string>)
+        const requestHeaders = new Headers([...this.headers, ...headers])
+
         // Resolve the base URL
         config.baseURL = withFirstFound(
             config.baseURL,
@@ -60,28 +64,25 @@ export class CeleryCore {
         }
         config.signal = aggregatedController.signal
 
-        // Prepare the request headers
-        config.headers = config.headers || {}
-
         // Retrieve the credential
         // If the credential is not provided in the config, use the credential store
-        if (!("Authorization" in config.headers)) {
+        if (!requestHeaders.has("Authorization")) {
             const credentialStore = this.getCredentialInterface()
 
             if (credentialStore) {
-                this.headers.set("Authorization", credentialStore?.getAuthorizationHeader())
+                requestHeaders.set("Authorization", credentialStore?.getAuthorizationHeader())
             }
         }
 
         // Remove the credentials from the request if the withCredentials is set to false
         if (config.withCredentials === false) {
-            this.headers.delete("Authorization")
+            if (requestHeaders.has("Authorization")) {
+                requestHeaders.delete("Authorization")
+            }
         }
 
-        // Append headers
-        for (const [key, value] of Object.entries(this.headers)) {
-            config.headers[key] = value
-        }
+        // Override the headers
+        config.headers = headerToRecords(requestHeaders)
 
         return new Promise(async (resolve, reject) => {
             try {
