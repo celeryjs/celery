@@ -1,22 +1,5 @@
-import type { AxiosDefaults, AxiosRequestConfig, AxiosResponse } from "axios";
 import type { CeleryError } from "./CeleryError";
-
-type ExtractType<T = Object> = { [K in keyof T]: T[K] }
-
-/**
- * Extract `AxiosDefaults` type
- */
-type ExtractedAxiosDefaults<Payload = any> = ExtractType<AxiosDefaults<Payload>>;
-
-/**
- * Extract `AxiosRequestConfig` type
- */
-type ExtractedAxiosRequestConfig<Payload = any> = ExtractType<AxiosRequestConfig<Payload>>
-
-/**
- * Extract `AxiosResponse` type
- */
-type ExtractedAxiosResponse<Response = any, Payload = any> = ExtractType<AxiosResponse<Response, Payload>>
+import type { ExtractedAxiosDefaults, ExtractedAxiosRequestConfig, ExtractedAxiosResponse } from "./types-extracted";
 
 interface InternalCeleryRequestConfig<Payload = any> extends Omit<ExtractedAxiosRequestConfig<Payload>, 'signal'> {
     signal?: AbortSignal
