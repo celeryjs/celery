@@ -2,17 +2,21 @@ import { mergeObject } from "./utils";
 import type { Axios } from "axios";
 import type { CeleryDefaultConfigs } from "./types";
 
-export class CeleryDefaults {
-    public config: CeleryDefaultConfigs
-
-    /**
-     * @internal
-     */
-    private axios: Axios
+class CeleryDefaultsInterface {
+    protected axios: Axios
+    protected config: CeleryDefaultConfigs
 
     constructor(axios: Axios, config?: CeleryDefaultConfigs, strategy?: 'merge' | 'update') {
         this.axios = axios
-        this.config = this.axios.defaults
+        this.config = mergeObject({}, this.axios.defaults)
+
+        // Link the axios defaults to the celery defaults
+        Object.defineProperty(this.axios, 'defaults', {
+            get: () => this.config,
+            set: (value) => { this.config = value },
+            enumerable: true,
+            configurable: true
+        })
 
         // Merge the provided configuration
         if (config) this.merge(config)
@@ -41,10 +45,9 @@ export class CeleryDefaults {
      * @param config 
      * @returns 
      */
-    merge(config: CeleryDefaultConfigs){
+    merge(config: CeleryDefaultConfigs) {
         const merged = mergeObject<CeleryDefaultConfigs>(this.config, config)
         this.config = merged
-        this.axios.defaults = merged
         return this.config
     }
 
@@ -55,7 +58,36 @@ export class CeleryDefaults {
      */
     update(config: CeleryDefaultConfigs) {
         this.config = config
-        this.axios.defaults = config 
         return this.config
     }
+}
+
+export class CeleryDefaults extends CeleryDefaultsInterface {
+    // #region properties
+    get timeout() {
+        return this.config.timeout
+    }
+
+    get timeoutErrorMessage() {
+        return this.config.timeoutErrorMessage
+    }
+
+    get headers (){
+        return this.config.headers
+    }
+    // #endregion
+
+    // #region methods
+    get transformRequest() {
+        return this.config.transformRequest
+    }
+
+    get transformResponse() {
+        return this.config.transformResponse
+    }
+
+    get paramsSerializer(){
+        return this.config.paramsSerializer
+    }
+    // #endregion
 }
