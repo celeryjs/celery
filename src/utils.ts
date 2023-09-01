@@ -38,3 +38,16 @@ export function mergeObject<T = Record<string, any>>(target: any, source: any): 
     Object.assign(target || {}, source)
     return target
 }
+
+/**
+ * Convert a header to a record
+ * @param headers 
+ * @returns 
+ */
+export function headerToRecords(headers: Headers) {
+    const records: Record<string, string> = {}
+    for (const [key, value] of headers) {
+        records[key] = value
+    }
+    return records
+}
