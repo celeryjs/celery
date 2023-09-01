@@ -28,10 +28,16 @@ export class CeleryCore {
 
     public readonly version = version
 
-    protected $client: Axios = axios.create()
+    protected $client: Axios
 
     constructor(options: CeleryCoreOptions = {}) {
+        // Create client interface
+        this.$client = axios.create()
+
+        // Set up the base URL
         this.url = options.url
+
+        // Set up dependencies
         this.context = options.context || new CeleryContext()
         this.credentialStore = options.credentialStore || new CeleryCredentialStore()
         
