@@ -6,7 +6,7 @@ class CeleryDefaultsInterface {
     protected axios: Axios
     protected config: CeleryDefaultConfigs
 
-    constructor(axios: Axios, config?: CeleryDefaultConfigs, strategy?: 'merge' | 'update') {
+    constructor(axios: Axios, config?: CeleryDefaultConfigs) {
         this.axios = axios
         this.config = mergeObject({}, this.axios.defaults)
 
