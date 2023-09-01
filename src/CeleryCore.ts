@@ -67,12 +67,15 @@ export class CeleryCore {
         // If the credential is not provided in the config, use the credential store
         if (!("Authorization" in config.headers)) {
             const credentialStore = this.getCredentialInterface()
-            config.headers["Authorization"] = credentialStore?.getAuthorizationHeader()
 
-            // Remove the credentials from the request if the withCredentials is set to false
-            if (config.withCredentials === false) {
-                delete config.headers["Authorization"]
+            if (credentialStore) {
+                this.headers.set("Authorization", credentialStore?.getAuthorizationHeader())
             }
+        }
+
+        // Remove the credentials from the request if the withCredentials is set to false
+        if (config.withCredentials === false) {
+            this.headers.delete("Authorization")
         }
 
         // Append headers
