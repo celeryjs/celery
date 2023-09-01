@@ -1,6 +1,6 @@
 {
   "name": "@celeryjs/celery",
-  "version": "1.0.0-alpha.11",
+  "version": "1.0.0-alpha.12",
   "description": "A HTTP Client built on top of Axios",
   "main": "dist/index.js",
   "types": "dist/src/index.d.ts",
