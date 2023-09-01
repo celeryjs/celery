@@ -55,7 +55,7 @@ export class CeleryCore {
         
         // Aggregate the abort signals
         const aggregatedController = new AggregatedAbortController([context.controller])
-        if (config.signal) { 
+        if (config.signal) {
             aggregatedController.attach(config.signal) 
         }
         config.signal = aggregatedController.signal
