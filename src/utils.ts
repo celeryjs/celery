@@ -32,7 +32,10 @@ export function mergeObjects<T = Record<string, any>>(...objects: any[]): T {
  */
 export function mergeObject<T = Record<string, any>>(target: any, source: any): T {
     for (const key of Object.keys(source)) {
-        if (source[key] instanceof Object) Object.assign(source[key], mergeObject(target[key], source[key]))
+        if (source[key] instanceof Object) {
+            target[key] = target[key] || {}
+            Object.assign(source[key], mergeObject(target[key], source[key]))
+        }
     }
     // Join `target` and modified `source`
     Object.assign(target || {}, source)
