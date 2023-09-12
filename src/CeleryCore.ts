@@ -61,6 +61,7 @@ export class CeleryCore {
             config.baseURL,
             context.url?.toString(),
             instance.url?.toString(),
+            instance.defaults.get("baseURL"),
         )
         
         // Aggregate the abort signals
